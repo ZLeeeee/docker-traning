@@ -19,10 +19,11 @@ services:
     ports:
       - 80:80
     volumes:
-      - ../data/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../data/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ../data/nginx/log:/var/log/nginx
       - ../data/nginx/dist:/usr/share/nginx/dist
     networks:
+      - nginx_frontend
       - app_net
 
   demo:
@@ -31,11 +32,11 @@ services:
     restart: always
     networks:
       - app_net
-    ports:
-      - 8080:8080
     depends_on:
       - redis
 
 networks:
   app_net:
+    external: false
+  nginx_frontend:
     external: false
